@@ -14,7 +14,7 @@ const SCRIPTS_UP: [(&str, &str); 2] = [
 ];
 
 fn create_config() -> Config {
-    let mut cfg = Config::new();
+    let mut cfg: Config = Config::new();
     if let Ok(host) = std::env::var("PG_HOST") {
         cfg.host = Some(host);
     }

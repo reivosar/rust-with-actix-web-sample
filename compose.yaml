@@ -1,0 +1,53 @@
+services:
+  backend-container:
+    build:
+      context: ./backend
+      target: final
+    container_name: 'backend-container'
+    ports:
+      - 8000:8000
+    environment:
+      - PG_DBNAME=example
+      - PG_HOST=db-container
+      - PG_USER=postgres
+      - PG_PASSWORD=mysecretpassword
+      - ADDRESS=0.0.0.0:8000
+      - RUST_LOG=debug
+    depends_on:
+      db-container:
+        condition: service_healthy
+
+  frontend-container:
+    build:
+      context: ./frontend
+    container_name: 'frontend-container'
+    volumes:
+      - .:/app
+    tty: true
+    ports:
+      - 5173:5173
+
+  db-container:
+    image: postgres
+    container_name: 'db-container'
+    restart: always
+    user: postgres
+    secrets:
+      - db-password
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=example
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+    expose:
+      - 5432
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  db-data:
+secrets:
+  db-password:
+    file: backend/db/password.txt
