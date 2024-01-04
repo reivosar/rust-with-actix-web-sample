@@ -31,17 +31,8 @@ To run the sample project, follow these steps:
 1. Ensure you have Rust and Cargo installed on your system.
 2. Clone this repository: `git clone https://github.com/reivosar/rust-with-actix-web-sample.git`
 3. Navigate to the project directory: `cd rust-with-actix-web-sample`
-4. Run the project: `cargo run`
+4. Run the project: `docker-compose up --build`
 
-The application should now be running locally, and you can access it by navigating to `http://localhost:8080` in your web browser.
+The application should now be running locally, and you can access it by navigating to `http://localhost:5173` in your web browser.
 
-## Contributing
-
-If you would like to contribute to this project, please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix: `git checkout -b feature-name`.
-3. Make your changes and commit them: `git commit -m "Description of changes"`.
-4. Push the changes to your fork: `git push origin feature-name`.
-5. Open a pull request.
 
