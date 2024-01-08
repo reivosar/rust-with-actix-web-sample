@@ -6,13 +6,8 @@ services:
     container_name: 'backend-container'
     ports:
       - 8000:8000
-    environment:
-      - PG_DBNAME=example
-      - PG_HOST=db-container
-      - PG_USER=postgres
-      - PG_PASSWORD=mysecretpassword
-      - ADDRESS=0.0.0.0:8000
-      - RUST_LOG=debug
+    env_file:
+      - ./backend/.env
     depends_on:
       db-container:
         condition: service_healthy
@@ -36,9 +31,8 @@ services:
       - db-password
     volumes:
       - db-data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=example
-      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+    env_file:
+      - ./backend/db/.env
     expose:
       - 5432
     healthcheck:
